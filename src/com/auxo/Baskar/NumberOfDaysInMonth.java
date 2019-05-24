@@ -69,43 +69,65 @@ public class NumberOfDaysInMonth {
 
     public static boolean isLeapYear(int year) {
         boolean flag = false;
-        if (year < 1 || year > 9999) {
-            return flag;
-        }
-        if ((year % 4 == 0)) {
-            if (year % 100 == 0) {
-                if (year % 400 == 0) {
-                    flag = true;
-                } else {
-                    flag = false;
-                }
-            } else {
+        if (isValidYear(year)) {
+
+
+            if ((year % 4 == 0)) {
                 flag = true;
+                if (year % 100 == 0) {
+                    if (year % 400 == 0) {
+                        flag = true;
+                    } else {
+                        flag = false;
+                    }
+                } else {
+                    flag = true;
+                }
             }
         }
         return flag;
     }
 
-    public static int getDaysInMonth(int month, int year2) {
-        if ((year2 < 1 || year2 > 9999) || (month < 1 || month > 28)) {
-            return -1;
-        }
+    public static int getDaysInMonth(int month, int year) {
+        if (isValidYear(year) && isValidMonth(month)) {
+            if (month % 2 == 0 && month != 2) {
+                return 30;
+            } else if (month % 2 != 0) {
+                return 31;
+            } else if (isFeb(month)&& isLeapYear(year)) {
 
-        if (month % 2 == 0 && month != 2) {
-            return 30;
-        } else if (month % 2 != 0) {
-            return 31;
-        } else if (month == 2) {
-            if ((year2 % 4 == 0) && (year2 % 100 != 0)) {
-                return 29;
-            } else if ((year2 % 4 == 0) && (year2 % 100 == 0) && (year2 % 400 == 0)) {
-                return 29;
-            } else {
-                return 28;
-            }
+                    return 29;
+                }
+                else {
+                    return 28;
+                }
+
 
         }
-
-        return 0;
+        return -1;
+    }
+    public static boolean isFeb(int number)
+    {
+        if(number%2==0)
+        {
+            return true;
+        }
+        return false;
+    }
+    public static  boolean isValidYear(int number)
+    {
+        if(number>=1 && number <=9999)
+        {
+            return true;
+        }
+        return false;
+    }
+    public static  boolean isValidMonth(int number)
+    {
+        if(number>=1 && number <=12)
+        {
+            return true;
+        }
+        return false;
     }
 }
